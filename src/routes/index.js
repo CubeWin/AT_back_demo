@@ -1,12 +1,15 @@
 const fs = require("fs");
 const { Router } = require("express");
-
 const router = Router();
+
+const authRoute = require("./auth");
+
+router.use("/", authRoute);
 
 fs.readdirSync(`${__dirname}/`).filter((f) => {
     const routeFile = f.split(".").slice(0, -1).join(".").toString();
 
-    return routeFile !== "index" && f !== ".DS_Store"
+    return routeFile !== "index" && routeFile !== "auth" && f !== ".DS_Store"
         ? router.use(`/${routeFile}`, require(`./${routeFile}`))
         : null;
 });

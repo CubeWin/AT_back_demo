@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 // const Conexion = require('./models/database')
 
@@ -15,27 +15,13 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || 9090;
 
-        this.dbConnection();
         this.middlewares();
         this.routes();
     }
 
-    async dbConnection() {
-        // try {
-        //     // const conn = new Conexion();
-        //     // conn.connect();
-        //     // conn.disconnect();
-        //     const customer = new getAll();
-        //     const rescustomer = customer.customerAll();
-        //     console.log('server -> custom', rescustomer);
-        // } catch (error) {
-        //     console.log('response error =>', error);
-        // }
-
-    }
 
     middlewares() {
-        this.app.use(morgan('combined'))
+        // this.app.use(morgan('combined'))
         this.app.use(cors());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
