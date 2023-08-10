@@ -49,9 +49,9 @@ class DataTableDao extends Conexion {
 
     dataTableCreate(dataTable) {
         try {
-            let columnName = 'table_name, description';
-            let columnValues = '?, ?'
-            let arrValues = [dataTable.table_name, dataTable.description]
+            let columnName = 'id_data_table, table_name, description';
+            let columnValues = '?, ?, ?'
+            let arrValues = [dataTable.id_data_table, dataTable.table_name, dataTable.description]
             let sqlQuery = `INSERT INTO DATA_TABLE (${columnName}) VALUES (${columnValues})`;
             this.connect();
             let stmt = this.dbConnection.prepare(sqlQuery);

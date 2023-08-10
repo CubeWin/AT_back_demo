@@ -88,7 +88,7 @@ class CustomerDao extends Conexion {
                 arrValues.push(customer.state)
             }
             arrValues.push(customer.id)
-            let sqlQuery = `UPDATE ZCUSTOMER SET ${columnName} WHERE ID_CUSTOMER = ${columnValues}`;
+            let sqlQuery = `UPDATE ZCUSTOMER SET ${columnName} WHERE ID_CUSTOMER = ?`;
 
             this.connect();
             let stmt = this.dbConnection.prepare(sqlQuery);

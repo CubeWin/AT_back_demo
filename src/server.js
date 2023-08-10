@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 
-// const morgan = require("morgan");
+const morgan = require("morgan");
 
 // const Conexion = require('./models/database')
 
@@ -21,7 +21,7 @@ class Server {
 
 
     middlewares() {
-        // this.app.use(morgan('combined'))
+        this.app.use(morgan('combined'))
         this.app.use(cors());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());

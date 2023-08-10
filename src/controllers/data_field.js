@@ -1,4 +1,5 @@
 const { request, response } = require('express')
+const { v4: uuidv4 } = require('uuid');
 const Data_field = require('../models/data/data_field');
 
 const getDataFields = (req = request, res = response) => {
@@ -87,14 +88,15 @@ const deleteDataField = (req = request, res = response) => {
 const createDataField = (req = request, res = response) => {
     try {
         const { id_data_table, field_name } = req.body;
-        const objReg = { id_data_table, field_name };
+        const id_data_field = uuidv4();
+        const objReg = { id_data_field, id_data_table, field_name };
         const data_field = new Data_field();
         const data = data_field.dataFieldCreate(objReg);
         const objResponse = {
             success: true,
             message: 'Data found',
             data: {
-                request: data,
+                request: { ...data, id: id_data_field },
             },
         }
         res.status(200).json(objResponse);

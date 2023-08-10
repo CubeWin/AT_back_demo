@@ -9,7 +9,7 @@ class UsuarioDao extends Conexion {
     try {
       this.connect()
       let stmt = this.dbConnection.prepare(
-        'SELECT * FROM USUARIO LIMIT 10 OFFSET 10'
+        'SELECT * FROM USUARIO'
       )
       let res = stmt.exec()
       console.log(res)

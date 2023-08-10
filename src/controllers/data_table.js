@@ -1,4 +1,5 @@
 const { request, response } = require('express')
+const { v4: uuidv4 } = require('uuid')
 const Data_table = require('../models/data/data_table');
 
 const getDataTables = (req = request, res = response) => {
@@ -86,15 +87,16 @@ const deleteDataTable = (req = request, res = response) => {
 
 const createDataTable = (req = request, res = response) => {
     try {
+        const id_data_table = uuidv4();
         const { table_name, description } = req.body;
-        const objReg = { table_name, description };
+        const objReg = { id_data_table, table_name, description };
         const data_table = new Data_table();
         const data = data_table.dataTableCreate(objReg);
         const objResponse = {
             success: true,
             message: 'Data found',
             data: {
-                request: data,
+                request: { ...data, id: id_data_table },
             },
         }
         res.status(200).json(objResponse);

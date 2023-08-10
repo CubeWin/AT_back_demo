@@ -1,4 +1,5 @@
 const { request, response } = require('express')
+const { v4: uuidv4 } = require('uuid')
 const Project = require('../models/data/project')
 
 const getProjects = (req = request, res = response) => {
@@ -35,101 +36,103 @@ const getProjects = (req = request, res = response) => {
 }
 const getProject = (req = request, res = response) => {
   try {
-      const { id } = req.params;
-      const project = new Project();
-      const data = project.projectGetOne(id);
-      const objResponse = {
-          success: true,
-          message: 'Data found',
-          data: {
-              request: data,
-          },
-      }
-      res.status(200).json(objResponse);
+    const { id } = req.params;
+    const project = new Project();
+    const data = project.projectGetOne(id);
+    const objResponse = {
+      success: true,
+      message: 'Data found',
+      data: {
+        request: data,
+      },
+    }
+    res.status(200).json(objResponse);
   } catch (error) {
-      const objResponse = {
-          success: false,
-          message: "",
-          error_code: 1306,
-          data: {},
-          error,
-      }
-      res.status(500).json(objResponse);
+    const objResponse = {
+      success: false,
+      message: "",
+      error_code: 1306,
+      data: {},
+      error,
+    }
+    res.status(500).json(objResponse);
   }
 }
 const createProject = (req = request, res = response) => {
   try {
-      const { name, description } = req.body;
-      const objReg = { name, description };
-      const project = new Project();
-      const data = project.projectCreate(objReg);
-      const objResponse = {
-          success: true,
-          message: 'Data found',
-          data: {
-              request: data,
-          },
-      }
-      res.status(200).json(objResponse);
+    const id_project = uuidv4();
+    const { name, description } = req.body;
+    const objReg = { id_project, name, description };
+    const project = new Project();
+    const data = project.projectCreate(objReg);
+    console.log(data);
+    const objResponse = {
+      success: true,
+      message: 'Data found',
+      data: {
+        request: { ...data, id: id_project },
+      },
+    }
+    res.status(200).json(objResponse);
   } catch (error) {
-      const objResponse = {
-          success: false,
-          message: "",
-          error_code: 1306,
-          data: {},
-          error,
-      }
-      res.status(500).json(objResponse);
+    const objResponse = {
+      success: false,
+      message: "",
+      error_code: 1306,
+      data: {},
+      error,
+    }
+    res.status(500).json(objResponse);
   }
 }
 const updateProject = (req = request, res = response) => {
   try {
-      const { id } = req.params;
-      const {name, description } = req.body;
-      const objReg = { name, description, id };
-      const project = new Project();
-      const data = project.projectUpdate(objReg);
-      const objResponse = {
-          success: true,
-          message: 'Data found',
-          data: {
-              request: data,
-          },
-      }
-      res.status(200).json(objResponse);
+    const { id } = req.params;
+    const { name, description } = req.body;
+    const objReg = { name, description, id };
+    const project = new Project();
+    const data = project.projectUpdate(objReg);
+    const objResponse = {
+      success: true,
+      message: 'Data found',
+      data: {
+        request: data,
+      },
+    }
+    res.status(200).json(objResponse);
   } catch (error) {
-      const objResponse = {
-          success: false,
-          message: "",
-          error_code: 1306,
-          data: {},
-          error,
-      }
-      res.status(500).json(objResponse);
+    const objResponse = {
+      success: false,
+      message: "",
+      error_code: 1306,
+      data: {},
+      error,
+    }
+    res.status(500).json(objResponse);
   }
 }
 const deleteProject = (req = request, res = response) => {
   try {
-      const { id } = req.params;
-      const project = new Project();
-      const data = project.projectDelete(id);
-      const objResponse = {
-          success: true,
-          message: 'Data delete',
-          data: {
-              request: data,
-          },
-      }
-      res.status(200).json(objResponse);
+    const { id } = req.params;
+    const project = new Project();
+    const data = project.projectDelete(id);
+    const objResponse = {
+      success: true,
+      message: 'Data delete',
+      data: {
+        request: data,
+      },
+    }
+    res.status(200).json(objResponse);
   } catch (error) {
-      const objResponse = {
-          success: false,
-          message: "",
-          error_code: 1306,
-          data: {},
-          error,
-      }
-      res.status(500).json(objResponse);
+    const objResponse = {
+      success: false,
+      message: "",
+      error_code: 1306,
+      data: {},
+      error,
+    }
+    res.status(500).json(objResponse);
   }
 }
 

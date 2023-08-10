@@ -18,6 +18,7 @@ class Conexion {
             this.dbConnection.connect(this.connOptions)
             console.log(`Base de datos conectado`);
         } catch (error) {
+            console.log('Error en la conexion >', error);
             throw new Error(error)
         }
     }

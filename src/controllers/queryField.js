@@ -1,4 +1,5 @@
 const { request, response } = require('express')
+const { v4: uuidv4 } = require('uuid')
 const QueryField = require('../models/data/queryField')
 
 const getQueryFields = (req = request, res = response) => {
@@ -59,15 +60,17 @@ const getQueryField = (req = request, res = response) => {
 }
 const createQueryField = (req = request, res = response) => {
   try {
+    const id_query_field = uuidv4();
     const { id_query, field_name, is_active } = req.body;
-    const objReg = { id_query, field_name, is_active };
+    const objReg = { id_query_field, id_query, field_name, is_active };
     const queryField = new QueryField();
+    console.log(objReg);
     const data = queryField.queryFieldCreate(objReg);
     const objResponse = {
       success: true,
       message: 'Data found',
       data: {
-        request: data,
+        request: { ...data, id: id_query_field },
       },
     }
     res.status(200).json(objResponse);

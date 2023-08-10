@@ -9,7 +9,7 @@ class SheetDao extends Conexion {
     sheetAll() {
         try {
             this.connect();
-            let stmt = this.dbConnection.prepare("SELECT id_sheet, id_project, title, nivel, is_query, id_query, is_plain, id_plain FROM SHEET LIMIT 10 OFFSET 10");
+            let stmt = this.dbConnection.prepare("SELECT id_sheet, id_project, title, nivel, is_query, id_query, is_plain, id_plain FROM SHEET");
             let res = stmt.exec();
             return res;
         } catch (error) {
@@ -25,6 +25,19 @@ class SheetDao extends Conexion {
             let stmt = this.dbConnection.prepare("SELECT id_sheet, id_project, title, nivel, is_query, id_query, is_plain, id_plain FROM SHEET WHERE id_sheet = ? LIMIT 1");
             let res = stmt.exec([id]);
             return res[0];
+        } catch (error) {
+            return error;
+        } finally {
+            this.disconnect();
+        }
+    }
+
+    getSheetByProject(idProject) {
+        try {
+            this.connect();
+            let stmt = this.dbConnection.prepare("SELECT id_sheet, id_project, title, nivel, is_query, id_query, is_plain, id_plain FROM SHEET WHERE id_project = ?");
+            let res = stmt.exec([idProject]);
+            return res;
         } catch (error) {
             return error;
         } finally {
@@ -48,9 +61,9 @@ class SheetDao extends Conexion {
 
     sheetCreate(sheet) {
         try {
-            let columnName = 'ID_PROJECT, TITLE';
-            let columnValues = '?, ?'
-            let arrValues = [sheet.id_project, sheet.title]
+            let columnName = 'ID_SHEET, ID_PROJECT, TITLE';
+            let columnValues = '?, ?, ?'
+            let arrValues = [sheet.id_sheet, sheet.id_project, sheet.title]
 
             if (sheet.nivel) {
                 columnName += ', NIVEL';
@@ -80,7 +93,8 @@ class SheetDao extends Conexion {
 
 
             let sqlQuery = `INSERT INTO SHEET (${columnName}) VALUES (${columnValues})`;
-
+            console.log(sqlQuery);
+            console.log(arrValues);
             this.connect();
             let stmt = this.dbConnection.prepare(sqlQuery);
             let res = stmt.exec(arrValues);
