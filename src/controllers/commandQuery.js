@@ -12,9 +12,6 @@ const projectQuery = (req = request, res = response) => {
     const resGetSheetsByProjectID = sheet.getSheetByProject(id)
     console.log('resGetSheetsByProjectID =>', resGetSheetsByProjectID);
     if (resGetSheetsByProjectID.length <= 0 || (!resGetSheetsByProjectID[0].IS_QUERY && !resGetSheetsByProjectID[0].IS_PLAIN)) {
-      console.log('pri. condicion', resGetSheetsByProjectID.length <= 0);
-      console.log('seg. condicion', !resGetSheetsByProjectID.IS_QUERY && !resGetSheetsByProjectID.IS_PLAIN);
-      console.log(`!resGetSheetsByProjectID.IS_QUERY = ${!resGetSheetsByProjectID.IS_QUERY} && !resGetSheetsByProjectID.IS_PLAIN = ${!resGetSheetsByProjectID.IS_PLAIN}`);
       const objResponse3 = {
         success: true,
         message: 'Data Obtenida',
