@@ -9,14 +9,17 @@ const projectQuery = (req = request, res = response) => {
     const { id } = req.params;
     console.log(id);
     const sheet = new SheetDao()
-    const resGetByProject = sheet.getSheetByProject(id)
-    console.log('resGetByProject =>', resGetByProject);
-    if (resGetByProject.length <= 0 || (!resGetByProject.IS_QUERY && !resGetByProject.IS_PLAIN)) {
+    const resGetSheetsByProjectID = sheet.getSheetByProject(id)
+    console.log('resGetSheetsByProjectID =>', resGetSheetsByProjectID);
+    if (resGetSheetsByProjectID.length <= 0 || (!resGetSheetsByProjectID[0].IS_QUERY && !resGetSheetsByProjectID[0].IS_PLAIN)) {
+      console.log('pri. condicion', resGetSheetsByProjectID.length <= 0);
+      console.log('seg. condicion', !resGetSheetsByProjectID.IS_QUERY && !resGetSheetsByProjectID.IS_PLAIN);
+      console.log(`!resGetSheetsByProjectID.IS_QUERY = ${!resGetSheetsByProjectID.IS_QUERY} && !resGetSheetsByProjectID.IS_PLAIN = ${!resGetSheetsByProjectID.IS_PLAIN}`);
       const objResponse3 = {
         success: true,
         message: 'Data Obtenida',
         data: {
-          sheet: resGetByProject[0].ID_SHEET || null,
+          sheet: resGetSheetsByProjectID[0].ID_SHEET || null,
           name: [],
           fields: [],
           request: [],
@@ -26,23 +29,24 @@ const projectQuery = (req = request, res = response) => {
       res.status(200).json(objResponse3);
       return
     }
-    const { ID_QUERY } = resGetByProject[0]
-    console.log(ID_QUERY);
+    const { ID_QUERY } = resGetSheetsByProjectID[0]
+    // console.log(ID_QUERY);
     const query = new QueryDao()
     const { NAME, SENTENCE } = query.queryGetOne(ID_QUERY)
-    console.log('Sentencia -> ', SENTENCE);
+    // console.log('Sentencia -> ', SENTENCE);
     if (!SENTENCE) throw new Error('No hay sentencia')
     const commandQuery = new CommandQueryDao()
     const data = commandQuery.execQuery(SENTENCE);
-    console.log('data', data);
+    // console.log('data', data);
     const queryField = new QueryFieldDao()
     const resQueryField = queryField.queryFieldGetOne(ID_QUERY)
-    console.log('resQueryField=>', resQueryField);
+    // console.log('resQueryField=>', resQueryField);
     const fieldsName = resQueryField.filter(field => field.IS_ACTIVE).map(field => field.FIELD_NAME)
     const objResponse = {
       success: true,
       message: 'Data Obtenida',
       data: {
+        sheet: resGetSheetsByProjectID[0].ID_SHEET || null,
         name: NAME,
         fields: fieldsName,
         request: data,

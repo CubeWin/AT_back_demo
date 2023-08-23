@@ -94,7 +94,8 @@ const updateSheet = (req = request, res = response) => {
   try {
     const { id } = req.params;
     const { id_project, title, nivel, is_query, id_query, is_plain, id_plain } = req.body;
-    const objReg = { id_project, title, id };
+    const objReg = { title, id };
+    if (id_project) { objReg.id_project = id_project; }
     if (nivel) { objReg.nivel = nivel; }
     if (is_query) { objReg.is_query = is_query; }
     if (id_query) { objReg.id_query = id_query; }

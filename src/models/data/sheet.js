@@ -108,8 +108,13 @@ class SheetDao extends Conexion {
 
     sheetUpdate(sheet) {
         try {
-            let columnName = 'ID_PROJECT = ?, TITLE = ?';
-            let arrValues = [sheet.id_project, sheet.title]
+            let columnName = 'TITLE = ?';
+            let arrValues = [sheet.title]
+
+            if (sheet.id_project) {
+                columnName += ', ID_PROJECT = ?';
+                arrValues.push(sheet.id_project)
+            }
 
             if (sheet.nivel) {
                 columnName += ', NIVEL = ?';
