@@ -10,7 +10,22 @@ const projectQuery = (req = request, res = response) => {
     console.log(id);
     const sheet = new SheetDao()
     const resGetByProject = sheet.getSheetByProject(id)
-    console.log(resGetByProject);
+    console.log('resGetByProject =>', resGetByProject);
+    if (resGetByProject.length <= 0 || (!resGetByProject.IS_QUERY && !resGetByProject.IS_PLAIN)) {
+      const objResponse3 = {
+        success: true,
+        message: 'Data Obtenida',
+        data: {
+          sheet: resGetByProject[0].ID_SHEET || null,
+          name: [],
+          fields: [],
+          request: [],
+        },
+      }
+
+      res.status(200).json(objResponse3);
+      return
+    }
     const { ID_QUERY } = resGetByProject[0]
     console.log(ID_QUERY);
     const query = new QueryDao()
@@ -46,5 +61,7 @@ const projectQuery = (req = request, res = response) => {
     res.status(200).json(objResponse);
   }
 }
+
+
 
 module.exports = { projectQuery }

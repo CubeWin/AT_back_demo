@@ -45,7 +45,7 @@ CREATE TABLE sheet(
 	user_create varchar(80) default 'default',
 	date_update timestamp default current_timestamp,
 	user_update varchar(80) default 'default',
-	primary key (id_project)
+	primary key (id_sheet)
 );
 
 CREATE TABLE query(
@@ -86,3 +86,31 @@ CREATE COLUMN TABLE "DBADMIN"."USUARIO"(
 
 -- username: admin | password: 1234
 INSERT INTO USUARIO (username, password, perfil) VALUES ('admin','$2a$10$pIxE.wehtIoOPmGbEUEYAOc3Y8Ta3YYqpejHP9IYhZh9FwEr8SRSG', 'USER_ADMIN');
+CREATE TABLE receipt (
+	id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+	percent VARCHAR(10),
+	totalNetoPay DECIMAL(10, 2),
+	totalPay DECIMAL(10, 2),
+	emisionFecha DATE,
+	customerPhone VARCHAR(20),
+	descripcionPay VARCHAR(100),
+	payCompany VARCHAR(200),
+	payName VARCHAR(50),
+	streetCompanyName VARCHAR(200),
+	companyaRuc VARCHAR(20),
+	companyName VARCHAR(200),
+	streetName VARCHAR(200),
+	dataRuc VARCHAR(20),
+	invoiceId VARCHAR(20),
+	issueDate DATE,
+	payableAmount DECIMAL(10, 2),
+	customerName VARCHAR(200),
+	itemDescription VARCHAR(200),
+	date_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	user_create VARCHAR(80) DEFAULT 'default',
+	date_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	user_update VARCHAR(80) DEFAULT 'default',
+	PRIMARY KEY (id)
+);
+
+
