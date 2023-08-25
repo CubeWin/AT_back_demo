@@ -21,7 +21,7 @@ class PlainDao extends Conexion {
     plainGetOne(id) {
         try {
             this.connect();
-            let stmt = this.dbConnection.prepare("SELECT id_plain, full_text FROM PLAIN WHERE id_plain = ? LIMIT 1");
+            let stmt = this.dbConnection.prepare("SELECT id_plain, full_text FROM PLAIN WHERE id_plain = ?");
             let res = stmt.exec([id]);
             return res[0];
         } catch (error) {
@@ -52,7 +52,6 @@ class PlainDao extends Conexion {
             let arrValues = [plain.id_plain, plain.full_text]
 
             let sqlQuery = `INSERT INTO PLAIN (${columnName}) VALUES (${columnValues})`;
-
             this.connect();
             let stmt = this.dbConnection.prepare(sqlQuery);
             let res = stmt.exec(arrValues);

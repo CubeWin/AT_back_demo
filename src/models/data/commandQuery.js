@@ -11,7 +11,6 @@ class CommandQueryDao extends Conexion {
       this.connect();
       let stmt = this.dbConnection.prepare(sqlQuery);
       let res = stmt.exec();
-      console.log(res);
       return res;
     } catch (error) {
       return error;
